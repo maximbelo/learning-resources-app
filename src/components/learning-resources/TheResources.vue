@@ -40,8 +40,10 @@ export default {
   provide() {
     return {
       resources: this.storedResources,
+      addResource: this.addResource,
     };
   },
+
   computed: {
     storedResButtonMode() {
       return this.selectedTab === "stored-resources" ? null : "flat";
@@ -50,9 +52,21 @@ export default {
       return this.selectedTab === "add-resource" ? null : "flat";
     },
   },
+
   methods: {
     setSelectedTab(tab) {
       this.selectedTab = tab;
+    },
+    addResource(title, desc, url) {
+      const newResource = {
+        id: new Date().toISOString(),
+        title: title,
+        description: desc,
+        link: url,
+      };
+
+      this.storedResources.unshift(newResource);
+      this.selectedTab = "stored-resources";
     },
   },
 };
